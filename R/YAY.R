@@ -1,3 +1,4 @@
 circle_area <- function(r){
-DSDAHLFHL
+  return(pi*r^2)
+}}}
   }
