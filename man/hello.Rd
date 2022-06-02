@@ -11,6 +11,7 @@ Calculates the circle area
   \item{r}{
    radius of the circle.
     }
+}
 \examples{
 circle_area(2)
 }
