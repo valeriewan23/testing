@@ -1,12 +1,12 @@
-\name{hello}
-\alias{hello}
-\title{Hello, World!}
+\name{circle_area}
+\alias{circle_area}
+\title{circle area}
 \usage{
-hello()
+circle_area(r)
 }
 \description{
-Prints 'Hello, world!'.
+Calculates the circle area
 }
 \examples{
-hello()
+circle_area(2)
 }
