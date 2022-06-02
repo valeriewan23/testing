@@ -30,8 +30,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      with:
-        path: ${{github.repository}}
+        with:
+          path: ${{github.repository}}
 
       - uses: ./setup-pandoc
 
