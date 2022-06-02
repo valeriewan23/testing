@@ -2,7 +2,6 @@ Package: testing
 Type: Package
 Title: This is a test package
 Version: 0.1.0
-<<<<<<< HEAD
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
