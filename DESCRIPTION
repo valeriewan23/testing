@@ -7,11 +7,3 @@ Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: CC BY 4.0
-=======
-Author: Valerie
-Maintainer: valeriewan2502@gmail.com
-Description: Test package for CI/CD github actions
-License: 
->>>>>>> 148736f8868d0f858dfd65ffa9b7e32cee20a22b
-Encoding: UTF-8
-LazyData: true
