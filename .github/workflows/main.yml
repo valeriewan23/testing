@@ -29,7 +29,9 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+      with:
+        path: ${{github.repository}}
 
       - uses: ./setup-pandoc
 
