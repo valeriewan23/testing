@@ -7,6 +7,10 @@ circle_area(r)
 \description{
 Calculates the circle area
 }
+\arguments{
+  \item{r}{
+   radius of the circle.
+    }
 \examples{
 circle_area(2)
 }
