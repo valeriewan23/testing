@@ -63,19 +63,19 @@ jobs:
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))') 
 
-      - name: Install dependencies
+      - name: Install dependencies #install rcmdcheck
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
-      - name: Check
+      - name: Check #displays erorr and warning messages
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
-      - name: Upload check results
+      - name: Upload check results #shows error and warning messages
         if: failure()
         uses: actions/upload-artifact@main
         with:
