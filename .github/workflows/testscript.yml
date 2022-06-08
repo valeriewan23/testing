@@ -49,7 +49,7 @@ jobs:
 
       - name: Test against test script
         run: |
-          ./R/test_script.R
+          R/test_script.R
         shell: Rscript {0}
 
       - name: Upload check results #shows error and warning messages
