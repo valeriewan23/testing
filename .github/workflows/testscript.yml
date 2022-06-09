@@ -24,14 +24,14 @@ jobs:
           - {os: macOS-latest, r: 'release'} 
 
     steps:
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@master
 
-      - uses: r-lib/actions/setup-r@v1 
+      - uses: r-lib/actions/setup-r@master 
         with:
           r-version: ${{ matrix.config.r }}
       - uses: r-lib/actions/setup-pandoc@v1
 
       - name: Test against test script
         run: |
-         rscript test_script.R
+         Rscript test_script.R
         shell: Rscript {0}
