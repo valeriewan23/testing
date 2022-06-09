@@ -30,6 +30,9 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
       - uses: r-lib/actions/setup-pandoc@v1
+      
+      - name: Install packages
+        run: Rscript install.packages('testing')
 
       - name: Test against test script
         run: Rscript test_script.R
