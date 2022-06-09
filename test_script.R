@@ -1,4 +1,4 @@
-library(testing)
+install_github("valeriewan23/testing")
 
 r <- 5
 
