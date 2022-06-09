@@ -15,13 +15,16 @@ name: Test-Script #name of the workflow
 jobs:
   build:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        r-version: ['3.6.3', '4.1.1']
 
     steps:
       - uses: actions/checkout@v2 #checks out code on job environment so we can use it to run tests
 
       - uses: r-lib/actions/setup-r@v1 #set up r environment for specified versions in the matrix
         with:
-          r-version: release
+          r-version: ${{ matrix.r-version }}
 
       - uses: r-lib/actions/setup-pandoc@v1
 
