@@ -1,4 +1,5 @@
-install_github("valeriewan23/testing")
+devtools::install_github("valeriewan23/testing")
+library(testing)
 
 r <- 5
 
