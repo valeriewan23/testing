@@ -36,5 +36,5 @@ jobs:
 
       - name: Test against test script
         run: |
-          R test_script.R
+          testing/test_script.R
         shell: Rscript {0}
