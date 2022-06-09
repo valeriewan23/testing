@@ -32,6 +32,5 @@ jobs:
       - uses: r-lib/actions/setup-pandoc@v1
 
       - name: Test against test script
-        run: |
-         Rscript test_script.R
+        run: Rscript test_script.R
         shell: Rscript {0}
