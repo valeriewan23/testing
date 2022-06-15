@@ -28,6 +28,7 @@ jobs:
     env: #config environment
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true # will not cause warning messages during calls to install packages to become errors
       _R_CHECK_FORCE_SUGGESTS_: false #prevents installation of suggested dependencies
+      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
