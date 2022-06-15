@@ -1,44 +1,66 @@
+# For help debugging build failures open an issue on the RStudio community with the 'github-actions' tag.
+# https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
+      - master #workflow triggered by push and pull requests to the main branch
 
-name: R-CMD-check
+name: R-CMD-check #name of the workflow
 
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
+    runs-on: ${{ matrix.config.os }} 
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) #
 
     strategy:
-      fail-fast: false
+      fail-fast: false # allows the test to continue running even though it fails in one OS
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
+          - {os: macOS-latest, r: 'release'} #test is done on windows and macOS environment and on the latest versions
 
-    env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      _R_CHECK_FORCE_SUGGESTS_: false
+    env: #config environment
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true # will not cause warning messages during calls to install packages to become errors
+      _R_CHECK_FORCE_SUGGESTS_: false #prevents installation of suggested dependencies
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_KEEP_PKG_SOURCE: yes
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2 #checks out code on job environment so we can use it to run tests
 
-      - uses: r-lib/actions/setup-pandoc@v2
-
-      - uses: r-lib/actions/setup-r@v2
+      - uses: r-lib/actions/setup-r@v1 #set up r environment for specified versions in the matrix
         with:
           r-version: ${{ matrix.config.r }}
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
+      - uses: r-lib/actions/setup-pandoc@v1 #not sure if needed
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version") #not sure if needed
+        shell: Rscript {0} 
+
+      - name: Install dependencies #install rcmdcheck
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
+
+      - name: Check #displays erorr and warning messages
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Upload check results #shows error and warning messages
+        if: failure()
+        uses: actions/upload-artifact@main
         with:
-          upload-snapshots: true
+          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          path: check
