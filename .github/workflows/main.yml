@@ -14,16 +14,10 @@ name: R-CMD-check #name of the workflow
 
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
-
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
+    runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
       matrix:
-        config:
-          - {os: macOS-latest,   r: 'release'}
-          - {os: windows-latest, r: 'release'}
+        r-version: ['3.6.3', '4.1.1']
           
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -40,6 +34,11 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           use-public-rspm: true
+          
+      - name: Install OS libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends libcurl4-openssl-dev
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
