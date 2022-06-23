@@ -44,10 +44,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install --no-install-recommends libcurl4-openssl-dev
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::rcmdcheck
-          needs: check
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version") #not sure if needed
+        shell: Rscript {0}
+        
+      - name: Install dependencies #install rcmdcheck
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
 
       - uses: r-lib/actions/check-r-package@v2
         with:
