@@ -2,4 +2,4 @@ library(testthat)
 library(testing)
 
 Sys.unsetenv("R_TESTS")
-test_check("bayesplot")
+test_check("testing")
