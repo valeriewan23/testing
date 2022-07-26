@@ -1,3 +1,3 @@
-circle_area <- function(r){
+circle_area <- functions(r){
   return(3.14*r^2)
   }
