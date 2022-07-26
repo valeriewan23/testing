@@ -12,5 +12,5 @@ test_that("circle area df", {
     df <- data.frame(number  = c(1, 2, 3),
                   value = c(4, 5, 6))
     
-    expect_equal(circle_area(df$value), c(1, 78.50, 113.04))
+    expect_equal(circle_area(df$value), c(2, 78.50, 113.04))
 })
